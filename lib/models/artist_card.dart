@@ -1,16 +1,14 @@
-//import 'dart:typed_data';
-import 'package:flute/functions/functions.dart';
 import 'package:flutter/material.dart';
 
 class ArtistModel extends StatelessWidget {
   final String name;
   final void Function()? onTap;
-  final String songpath;
+  final Widget imagePlace;
   const ArtistModel({
     super.key,
     required this.name,
     this.onTap,
-    required this.songpath,
+    required this.imagePlace,
   });
 
   @override
@@ -23,35 +21,10 @@ class ArtistModel extends StatelessWidget {
         width: double.infinity,
         child: Column(
           children: [
-            FutureBuilder(
-              future: getMetadata(songpath),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var image;
-                  image = snapshot.data?.albumArt == null
-                      ? const AssetImage('assets/images/grayscale.png')
-                      : MemoryImage(snapshot.data!.albumArt!);
-                  return Image(
-                    image: image,
-                    height: imageSize,
-                    width: imageSize,
-                    fit: BoxFit.cover,
-                    gaplessPlayback: true,
-                    errorBuilder: (context, error, stackTrace) => const Image(
-                      image: AssetImage('assets/images/grayscale.png'),
-                      height: imageSize,
-                      width: imageSize,
-                      fit: BoxFit.cover,
-                      gaplessPlayback: true,
-                    ),
-                  );
-                } else {
-                  return const SizedBox(
-                    height: imageSize,
-                    width: imageSize,
-                  );
-                }
-              },
+            SizedBox(
+              height: imageSize,
+              width: imageSize,
+              child: imagePlace,
             ),
             const SizedBox(
               height: 8,
