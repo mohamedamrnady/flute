@@ -1,5 +1,6 @@
 import 'package:flute/collections/collections.dart';
 import 'package:flute/models/models.dart';
+import 'package:flute/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 
@@ -20,7 +21,20 @@ class ArtistScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ArtistModel(
                   name: snapshot.data![index].name.toString(),
-                  onTap: (() {}),
+                  onTap: (() {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SongsOfArtistScreen(
+                                artistName:
+                                    snapshot.data![index].name.toString(),
+                                songs: snapshot.data![index].songs
+                                    .filter()
+                                    .sortByTrackName()
+                                    .findAll(),
+                              )),
+                    );
+                  }),
                 );
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
