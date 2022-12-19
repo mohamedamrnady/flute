@@ -21,18 +21,19 @@ class ArtistScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ArtistModel(
                   name: snapshot.data![index].name.toString(),
+                  songpath: snapshot.data![index].songs.first.path!,
                   onTap: (() {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SongsOfArtistScreen(
-                                artistName:
-                                    snapshot.data![index].name.toString(),
-                                songs: snapshot.data![index].songs
-                                    .filter()
-                                    .sortByTrackName()
-                                    .findAll(),
-                              )),
+                        builder: (context) => SongsOfArtistScreen(
+                          artistName: snapshot.data![index].name.toString(),
+                          songs: snapshot.data![index].songs
+                              .filter()
+                              .sortByTrackName()
+                              .findAll(),
+                        ),
+                      ),
                     );
                   }),
                 );
