@@ -74,6 +74,8 @@ class SongModel extends StatelessWidget {
                     ),
                     Text(
                       artistName,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
