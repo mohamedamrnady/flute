@@ -33,10 +33,11 @@ class ArtistScreen extends StatelessWidget {
                       Hero image = Hero(
                         tag: 'artist-img-$artistName',
                         child: Image(
-                          image: (snapshot.data?.albumArt == null
-                              ? const AssetImage('assets/images/grayscale.png')
-                              : MemoryImage(
-                                  snapshot.data!.albumArt!)) as ImageProvider,
+                          image: (snapshot.data?.albumArt != null
+                                  ? MemoryImage(snapshot.data!.albumArt!)
+                                  : const AssetImage(
+                                      'assets/images/grayscale.png'))
+                              as ImageProvider,
                           fit: BoxFit.cover,
                           gaplessPlayback: true,
                           errorBuilder: (context, error, stackTrace) =>
