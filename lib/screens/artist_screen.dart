@@ -28,10 +28,11 @@ class ArtistScreen extends StatelessWidget {
                         getMetadata(snapshot.data![index].songs.first.path!),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        var image;
-                        image = snapshot.data?.albumArt == null
+                        ImageProvider<Object> image;
+                        image = (snapshot.data?.albumArt == null
                             ? const AssetImage('assets/images/grayscale.png')
-                            : MemoryImage(snapshot.data!.albumArt!);
+                            : MemoryImage(
+                                snapshot.data!.albumArt!)) as ImageProvider;
                         return Image(
                           image: image,
                           fit: BoxFit.cover,

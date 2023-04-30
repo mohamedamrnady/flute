@@ -33,10 +33,11 @@ class SongModel extends StatelessWidget {
                 future: getMetadata(songpath),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    var image;
-                    image = snapshot.data?.albumArt == null
-                        ? const AssetImage('assets/images/grayscale.png')
-                        : MemoryImage(snapshot.data!.albumArt!);
+                    ImageProvider<Object> image;
+                    image = (snapshot.data?.albumArt == null
+                            ? const AssetImage('assets/images/grayscale.png')
+                            : MemoryImage(snapshot.data!.albumArt!))
+                        as ImageProvider<Object>;
                     return Image(
                       image: image,
                       height: imageSize,
