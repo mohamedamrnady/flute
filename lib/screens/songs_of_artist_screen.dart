@@ -43,6 +43,7 @@ class SongsOfArtistScreen extends StatelessWidget {
                             name: snapshot.data![index - 1].trackName!,
                             artistName: artistName,
                             songpath: snapshot.data![index - 1].path!,
+                            onTap: () {},
                           ),
                   )
                 : const Center(

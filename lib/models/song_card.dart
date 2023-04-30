@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flute/functions/metadata.dart';
 import 'package:flutter/material.dart';
 
@@ -6,14 +5,12 @@ class SongModel extends StatelessWidget {
   final String name;
   final String artistName;
   final void Function()? onTap;
-  final Uint8List? cover;
   final String songpath;
   const SongModel({
     super.key,
     required this.name,
-    this.onTap,
+    required this.onTap,
     required this.artistName,
-    this.cover,
     required this.songpath,
   });
 
