@@ -23,8 +23,8 @@ Future<void> getAllSongs(Isar isar) async {
           ..name = songmetadata.albumArtistName ?? 'Unknown';
         final song = Songs()
           ..path = entity.path
-          ..trackName = songmetadata.trackName ??
-              basename(entity.path).replaceAll('.mp3', '')
+          ..trackName =
+              songmetadata.trackName ?? basename(entity.path).split('.')[0]
           ..authorName = songmetadata.authorName
           ..albumArtistName.value = artist
           ..albumName = songmetadata.albumName;
