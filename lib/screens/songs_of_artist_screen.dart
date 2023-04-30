@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class SongsOfArtistScreen extends StatelessWidget {
   final String artistName;
   final Future<List<Songs>> songs;
-  final Widget imagePlace;
+  final Hero imagePlace;
   const SongsOfArtistScreen({
     super.key,
     required this.artistName,

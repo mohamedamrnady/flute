@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ArtistModel extends StatelessWidget {
   final String name;
   final void Function()? onTap;
-  final Widget imagePlace;
+  final Hero imagePlace;
   const ArtistModel({
     super.key,
     required this.name,

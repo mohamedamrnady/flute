@@ -21,20 +21,22 @@ class ArtistScreen extends StatelessWidget {
             return GridView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                Widget imagePlace = Hero(
-                  tag: 'artist-img-${snapshot.data![index].name.toString()}',
-                  child: FutureBuilder(
-                    future:
-                        getMetadata(snapshot.data![index].songs.first.path!),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        ImageProvider<Object> image;
-                        image = (snapshot.data?.albumArt == null
-                            ? const AssetImage('assets/images/grayscale.png')
-                            : MemoryImage(
-                                snapshot.data!.albumArt!)) as ImageProvider;
-                        return Image(
-                          image: image,
+                String artistName = snapshot.data![index].name.toString();
+                Future<List<Songs>> artistSongs = snapshot.data![index].songs
+                    .filter()
+                    .sortByTrackName()
+                    .findAll();
+                return FutureBuilder(
+                  future: getMetadata(snapshot.data![index].songs.first.path!),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      Hero image = Hero(
+                        tag: 'artist-img-$artistName',
+                        child: Image(
+                          image: (snapshot.data?.albumArt == null
+                              ? const AssetImage('assets/images/grayscale.png')
+                              : MemoryImage(
+                                  snapshot.data!.albumArt!)) as ImageProvider,
                           fit: BoxFit.cover,
                           gaplessPlayback: true,
                           errorBuilder: (context, error, stackTrace) =>
@@ -43,31 +45,28 @@ class ArtistScreen extends StatelessWidget {
                             fit: BoxFit.cover,
                             gaplessPlayback: true,
                           ),
-                        );
-                      } else {
-                        return const SizedBox();
-                      }
-                    },
-                  ),
-                );
-                return ArtistModel(
-                  imagePlace: imagePlace,
-                  name: snapshot.data![index].name.toString(),
-                  onTap: (() {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SongsOfArtistScreen(
-                          imagePlace: imagePlace,
-                          artistName: snapshot.data![index].name.toString(),
-                          songs: snapshot.data![index].songs
-                              .filter()
-                              .sortByTrackName()
-                              .findAll(),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                      return ArtistModel(
+                        imagePlace: image,
+                        name: artistName,
+                        onTap: (() {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SongsOfArtistScreen(
+                                imagePlace: image,
+                                artistName: artistName,
+                                songs: artistSongs,
+                              ),
+                            ),
+                          );
+                        }),
+                      );
+                    } else {
+                      return const CircularProgressIndicator.adaptive();
+                    }
+                  },
                 );
               },
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
