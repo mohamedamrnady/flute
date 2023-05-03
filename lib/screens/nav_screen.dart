@@ -50,7 +50,8 @@ class NavigationScreen extends StatelessWidget {
                 .toList(),
             labelColor: Theme.of(context).colorScheme.primary,
             unselectedLabelColor:
-                Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+                Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            indicatorSize: TabBarIndicatorSize.tab,
             controller: tabController,
           ),
           body: TabBarView(

@@ -15,7 +15,6 @@ class SongsOfArtistScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double imageSize = 360;
     return Scaffold(
       appBar: AppBar(
         title: Text(artistName),
@@ -30,8 +29,7 @@ class SongsOfArtistScreen extends StatelessWidget {
                         ? Column(
                             children: [
                               SizedBox(
-                                width: double.maxFinite,
-                                height: imageSize,
+                                width: double.infinity,
                                 child: imagePlace,
                               ),
                               const SizedBox(

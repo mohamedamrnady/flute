@@ -16,28 +16,54 @@ class ArtistModel extends StatelessWidget {
     const double imageSize = 144;
     return InkWell(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        width: double.infinity,
+      child: Card(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        elevation: 5,
+        margin: const EdgeInsets.all(4),
         child: Column(
           children: [
             SizedBox(
               height: imageSize,
-              width: imageSize,
+              width: double.infinity,
               child: imagePlace,
             ),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                name,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
       ),
     );
+    // return InkWell(
+    //   onTap: onTap,
+    //   child: Container(
+    //     padding: const EdgeInsets.symmetric(vertical: 8.0),
+    //     width: double.infinity,
+    //     child: Column(
+    //       children: [
+    //         SizedBox(
+    //           height: imageSize,
+    //           width: imageSize,
+    //           child: imagePlace,
+    //         ),
+    //         const SizedBox(
+    //           height: 8,
+    //         ),
+    //         Text(
+    //           name,
+    //           style: const TextStyle(fontWeight: FontWeight.bold),
+    //           maxLines: 1,
+    //           overflow: TextOverflow.ellipsis,
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

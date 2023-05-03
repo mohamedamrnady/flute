@@ -31,6 +31,7 @@ class ArtistScreen extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       Hero image = Hero(
+                        transitionOnUserGestures: true,
                         tag: 'artist-img-$artistName',
                         child: Image(
                           image: (snapshot.data?.albumArt != null
@@ -38,7 +39,7 @@ class ArtistScreen extends StatelessWidget {
                                   : const AssetImage(
                                       'assets/images/grayscale.png'))
                               as ImageProvider,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fitWidth,
                           gaplessPlayback: true,
                           errorBuilder: (context, error, stackTrace) =>
                               const Image(
@@ -51,18 +52,16 @@ class ArtistScreen extends StatelessWidget {
                       return ArtistModel(
                         imagePlace: image,
                         name: artistName,
-                        onTap: (() {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SongsOfArtistScreen(
-                                imagePlace: image,
-                                artistName: artistName,
-                                songs: artistSongs,
-                              ),
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            maintainState: true,
+                            builder: (context) => SongsOfArtistScreen(
+                              artistName: artistName,
+                              songs: artistSongs,
+                              imagePlace: image,
                             ),
-                          );
-                        }),
+                          ),
+                        ),
                       );
                     } else {
                       return const CircularProgressIndicator.adaptive();
