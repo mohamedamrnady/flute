@@ -13,7 +13,7 @@ class ArtistModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double imageSize = 144;
+    const double imageSize = 160;
     return InkWell(
       onTap: onTap,
       child: Card(
@@ -24,11 +24,11 @@ class ArtistModel extends StatelessWidget {
           children: [
             SizedBox(
               height: imageSize,
-              width: double.infinity,
+              width: double.maxFinite,
               child: imagePlace,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Text(
                 name,
                 style: const TextStyle(fontWeight: FontWeight.bold),
