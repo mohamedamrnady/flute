@@ -1,7 +1,7 @@
 import 'package:flute/functions/functions.dart';
+import 'package:flute/theme/dynamic_theme_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flute/screens/nav_screen.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:isar/isar.dart';
@@ -29,24 +29,11 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key, required this.isar});
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-        builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-      return MaterialApp(
-        theme: ThemeData(
-          colorScheme: lightDynamic,
-          //useMaterial3: true,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        darkTheme: ThemeData(
-          colorScheme: darkDynamic,
-          //useMaterial3: true,
-        ),
-        title: 'Flute',
-        debugShowCheckedModeBanner: false,
-        home: NavigationScreen(
-          isar: isar,
-        ),
-      );
-    });
+    return DynamicThemeBuilder(
+      home: NavigationScreen(
+        isar: isar,
+      ),
+      title: 'Flute',
+    );
   }
 }
