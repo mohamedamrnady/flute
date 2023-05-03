@@ -19,35 +19,45 @@ class SongsOfArtistScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(artistName),
       ),
-      body: FutureBuilder(
-          future: songs,
-          builder: (context, snapshot) {
-            return snapshot.hasData
-                ? ListView.builder(
-                    itemCount: snapshot.data!.length + 1,
-                    itemBuilder: (context, index) => index == 0
-                        ? Column(
-                            children: [
-                              SizedBox(
-                                width: double.infinity,
-                                child: imagePlace,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              )
-                            ],
-                          )
-                        : SongModel(
-                            name: snapshot.data![index - 1].trackName!,
+      body: CustomScrollView(
+        slivers: [
+          SliverPadding(
+            padding: const EdgeInsets.all(8),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                width: double.infinity,
+                child: imagePlace,
+              ),
+            ),
+          ),
+          FutureBuilder(
+              future: songs,
+              builder: (context, snapshot) {
+                return snapshot.hasData
+                    ? SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          childCount: snapshot.data!.length,
+                          (context, index) => SongModel(
+                            name: snapshot.data![index].trackName!,
                             artistName: artistName,
-                            songpath: snapshot.data![index - 1].path!,
+                            songpath: snapshot.data![index].path!,
                             onTap: () {},
                           ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  );
-          }),
+                        ),
+                      )
+                    : const SliverToBoxAdapter(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+              }),
+        ],
+      ),
     );
   }
 }
