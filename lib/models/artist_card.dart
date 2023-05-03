@@ -31,7 +31,6 @@ class ArtistModel extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 5.0),
               child: Text(
                 name,
-                style: const TextStyle(fontWeight: FontWeight.bold),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
