@@ -28,11 +28,12 @@ class ArtistModel extends StatelessWidget {
               child: imagePlace,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
+              padding: const EdgeInsets.only(top: 7),
               child: Text(
                 name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
               ),
             ),
           ],

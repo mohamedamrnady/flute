@@ -39,7 +39,7 @@ class ArtistScreen extends StatelessWidget {
                                   : const AssetImage(
                                       'assets/images/grayscale.png'))
                               as ImageProvider,
-                          fit: BoxFit.fitWidth,
+                          fit: BoxFit.cover,
                           gaplessPlayback: true,
                           errorBuilder: (context, error, stackTrace) =>
                               const Image(
