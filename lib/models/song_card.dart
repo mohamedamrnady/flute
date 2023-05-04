@@ -16,7 +16,7 @@ class SongModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double imageSize = 50;
+    const double imageSize = 65;
     return InkWell(
       onTap: onTap,
       child: Padding(
@@ -30,25 +30,23 @@ class SongModel extends StatelessWidget {
                 future: getMetadata(songpath),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    ImageProvider<Object> image;
-                    image = (snapshot.data?.albumArt == null
-                            ? const AssetImage('assets/images/grayscale.png')
-                            : MemoryImage(snapshot.data!.albumArt!))
-                        as ImageProvider<Object>;
-                    return Image(
-                      image: image,
-                      height: imageSize,
-                      width: imageSize,
-                      fit: BoxFit.cover,
-                      gaplessPlayback: true,
-                      errorBuilder: (context, error, stackTrace) => const Image(
-                        image: AssetImage('assets/images/grayscale.png'),
-                        height: imageSize,
-                        width: imageSize,
-                        fit: BoxFit.cover,
-                        gaplessPlayback: true,
-                      ),
-                    );
+                    return snapshot.data?.albumArt != null
+                        ? Image(
+                            image: MemoryImage(snapshot.data!.albumArt!),
+                            height: imageSize,
+                            width: imageSize,
+                            fit: BoxFit.cover,
+                            gaplessPlayback: true,
+                            errorBuilder: (context, error, stackTrace) =>
+                                const Icon(
+                              Icons.music_note_rounded,
+                              size: imageSize,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.music_note_rounded,
+                            size: imageSize,
+                          );
                   } else {
                     return const SizedBox(
                       height: imageSize,

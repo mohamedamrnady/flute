@@ -33,21 +33,27 @@ class ArtistScreen extends StatelessWidget {
                       Hero image = Hero(
                         transitionOnUserGestures: true,
                         tag: 'artist-img-$artistName',
-                        child: Image(
-                          image: (snapshot.data?.albumArt != null
-                                  ? MemoryImage(snapshot.data!.albumArt!)
-                                  : const AssetImage(
-                                      'assets/images/grayscale.png'))
-                              as ImageProvider,
-                          fit: BoxFit.cover,
-                          gaplessPlayback: true,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Image(
-                            image: AssetImage('assets/images/grayscale.png'),
-                            fit: BoxFit.cover,
-                            gaplessPlayback: true,
-                          ),
-                        ),
+                        child: snapshot.data?.albumArt != null
+                            ? Image(
+                                image: MemoryImage(snapshot.data!.albumArt!),
+                                fit: BoxFit.cover,
+                                gaplessPlayback: true,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const SizedBox(
+                                  height: 160,
+                                  child: Icon(
+                                    Icons.person_rounded,
+                                    size: 100,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(
+                                height: 160,
+                                child: Icon(
+                                  Icons.person_rounded,
+                                  size: 100,
+                                ),
+                              ),
                       );
                       return ArtistModel(
                         imagePlace: image,
