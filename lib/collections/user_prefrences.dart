@@ -5,4 +5,6 @@ part 'user_prefrences.g.dart';
 class UserPrefrences {
   Id id = Isar.autoIncrement;
   bool? firstRun;
+  bool? monetTheme;
+  bool? darkTheme;
 }
