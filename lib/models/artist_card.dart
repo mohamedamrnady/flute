@@ -18,7 +18,6 @@ class ArtistModel extends StatelessWidget {
       onTap: onTap,
       child: Card(
         clipBehavior: Clip.antiAliasWithSaveLayer,
-        elevation: 5,
         margin: const EdgeInsets.all(4),
         child: Column(
           children: [
