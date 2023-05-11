@@ -9,7 +9,6 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final uPref = UserPrefrences()..id = 1;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
@@ -21,17 +20,16 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   SettingsModel(
                     settingsTitle: 'Dark Mode',
-                    onChanged: (value) async {
-                      snapshot.data!.darkTheme = value;
-                      await isar.writeTxn(() async {
-                        uPref.darkTheme = value;
-                        await isar.userPrefrences.put(uPref);
-                      });
-                    },
-                    settingValue: snapshot.data!.darkTheme ?? true,
+                    intialSettingValue: snapshot.data!.darkTheme ?? true,
                     isar: isar,
-                    uPref: uPref,
-                  )
+                    uPref: snapshot.data!,
+                  ),
+                  SettingsModel(
+                    settingsTitle: 'Material You',
+                    intialSettingValue: snapshot.data!.monetTheme ?? true,
+                    isar: isar,
+                    uPref: snapshot.data!,
+                  ),
                 ],
               )
             : const CircularProgressIndicator(),
