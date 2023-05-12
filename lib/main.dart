@@ -18,23 +18,19 @@ void main() async {
   var isFirstRun = await checkFirstRun(isar);
   await Permission.audio.request();
   await Permission.storage.request();
-  int currentTheme = await getCurrentTheme(isar);
   if (isFirstRun == true) {
     await getAllSongs(isar);
   }
   runApp(MyApp(
     isar: isar,
-    currentTheme: currentTheme,
   ));
 }
 
 class MyApp extends StatelessWidget {
   final Isar isar;
-  final int currentTheme;
   const MyApp({
     super.key,
     required this.isar,
-    required this.currentTheme,
   });
   @override
   Widget build(BuildContext context) {
@@ -43,7 +39,6 @@ class MyApp extends StatelessWidget {
         isar: isar,
       ),
       title: 'Flute',
-      themeId: currentTheme,
     );
   }
 }

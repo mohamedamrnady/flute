@@ -8,11 +8,9 @@ class DynamicThemeBuilder extends StatelessWidget {
     Key? key,
     required this.title,
     required this.home,
-    required this.themeId,
   }) : super(key: key);
   final String title;
   final Widget home;
-  final int themeId;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +34,7 @@ class DynamicThemeBuilder extends StatelessWidget {
             },
             fallbackTheme: lightCustomTheme,
           ),
-          defaultThemeId: themeId,
+          defaultThemeId: 0,
           builder: (context, theme) => MaterialApp(
             debugShowCheckedModeBanner: false,
             title: title,
