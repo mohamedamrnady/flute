@@ -1,6 +1,6 @@
-import 'dart:ui';
+// import 'dart:ui';
 import 'package:flute/collections/collections.dart';
-import 'package:flutter/scheduler.dart';
+// import 'package:flutter/scheduler.dart';
 import 'package:isar/isar.dart';
 
 Future<bool> checkFirstRun(Isar isar) async {
