@@ -10,9 +10,9 @@ Future<bool> checkFirstRun(Isar isar) async {
   if (x == null) {
     var y = UserPrefrences()
       ..firstRun = false
-      ..darkTheme =
-          SchedulerBinding.instance.platformDispatcher.platformBrightness ==
-              Brightness.dark
+      ..darkTheme = false
+      // SchedulerBinding.instance.platformDispatcher.platformBrightness ==
+      //     Brightness.dark
       ..monetTheme = false;
     await isar.writeTxn(
       () => uPref.put(
