@@ -1,6 +1,9 @@
 import 'package:flute/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+import 'package:miniplayer/miniplayer.dart';
+
+final miniPlayerController = MiniplayerController();
 
 class NavigationScreen extends StatelessWidget {
   final Isar isar;
@@ -54,9 +57,23 @@ class NavigationScreen extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             controller: tabController,
           ),
-          body: TabBarView(
-            controller: tabController,
-            children: screens,
+          body: Stack(
+            children: [
+              TabBarView(
+                controller: tabController,
+                children: screens,
+              ),
+              Miniplayer(
+                minHeight: 70,
+                maxHeight: MediaQuery.of(context).size.height,
+                controller: miniPlayerController,
+                builder: (height, percentage) {
+                  return Center(
+                    child: Text('$height, $percentage'),
+                  );
+                },
+              ),
+            ],
           ),
         );
       }),

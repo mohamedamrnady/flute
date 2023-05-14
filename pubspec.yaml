@@ -1,5 +1,6 @@
 name: flute
 description: A minimal music player made in flutter.
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -25,6 +26,8 @@ dependencies:
   path: ^1.8.2
   path_provider: ^2.0.14
   permission_handler: ^10.2.0
+  miniplayer:
+    path: external/miniplayer
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -1,0 +1,3 @@
+[submodule "external/miniplayer"]
+	path = external/miniplayer
+	url = https://github.com/dxvid-pts/miniplayer
