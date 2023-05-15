@@ -42,12 +42,8 @@ class SongsOfArtistScreen extends StatelessWidget {
                     ? SliverList(
                         delegate: SliverChildBuilderDelegate(
                           childCount: snapshot.data!.length,
-                          (context, index) => SongModel(
-                            name: snapshot.data![index].trackName!,
-                            artistName: artistName,
-                            songpath: snapshot.data![index].path!,
-                            onTap: () {},
-                          ),
+                          (context, index) =>
+                              SongModel(song: snapshot.data![index]),
                         ),
                       )
                     : const SliverToBoxAdapter(

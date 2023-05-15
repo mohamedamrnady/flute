@@ -33,12 +33,7 @@ class SongScreen extends StatelessWidget {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return SongModel(
-                  name: snapshot.data![index].trackName.toString(),
-                  artistName:
-                      snapshot.data?[index].albumArtistName.value?.name ??
-                          'Unknown',
-                  songpath: snapshot.data![index].path!,
-                  onTap: (() {}),
+                  song: snapshot.data![index],
                 );
               },
             );

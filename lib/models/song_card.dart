@@ -1,24 +1,28 @@
+import 'package:flute/collections/collections.dart';
 import 'package:flute/functions/metadata.dart';
+import 'package:flute/screens/nav_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:miniplayer/miniplayer.dart';
 
-class SongModel extends StatelessWidget {
-  final String name;
-  final String artistName;
-  final void Function()? onTap;
-  final String songpath;
+class SongModel extends ConsumerWidget {
+  final Songs song;
   const SongModel({
     super.key,
-    required this.name,
-    required this.onTap,
-    required this.artistName,
-    required this.songpath,
+    required this.song,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const double imageSize = 65;
     return InkWell(
-      onTap: onTap,
+      onTap: () {
+        ref
+            .read(miniPlayerControllerProvider.notifier)
+            .state
+            .animateToHeight(state: PanelState.MAX);
+        ref.read(selectedTrackProvider.notifier).state = song;
+      },
       child: Padding(
         padding: const EdgeInsets.fromLTRB(12, 0, 8, 0),
         child: Container(
@@ -27,7 +31,7 @@ class SongModel extends StatelessWidget {
           child: Row(
             children: [
               FutureBuilder(
-                future: getMetadata(songpath),
+                future: getMetadata(song.path),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return snapshot.data?.albumArt != null
@@ -63,13 +67,13 @@ class SongModel extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
+                      song.trackName.toString(),
                       style: const TextStyle(fontSize: 15),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
-                      artistName,
+                      song.albumArtistName.value!.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontSize: 13),

@@ -1,9 +1,17 @@
+import 'package:flute/collections/collections.dart';
+import 'package:flute/functions/functions.dart';
 import 'package:flute/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:miniplayer/miniplayer.dart';
 
-final miniPlayerController = MiniplayerController();
+final miniPlayerControllerProvider =
+    StateProvider.autoDispose<MiniplayerController>(
+  (ref) => MiniplayerController(),
+);
+
+final selectedTrackProvider = StateProvider<Songs?>((ref) => null);
 
 class NavigationScreen extends StatelessWidget {
   final Isar isar;
@@ -26,6 +34,9 @@ class NavigationScreen extends StatelessWidget {
     return DefaultTabController(
       length: icons.length,
       child: Builder(builder: (BuildContext context) {
+        const double playerHeight = 70;
+        const double indicatorHeight = 4.0;
+        const double imageSize = playerHeight - indicatorHeight;
         final TabController tabController = DefaultTabController.of(context);
         return Scaffold(
           bottomNavigationBar: TabBar(
@@ -63,14 +74,102 @@ class NavigationScreen extends StatelessWidget {
                 controller: tabController,
                 children: screens,
               ),
-              Miniplayer(
-                minHeight: 70,
-                maxHeight: MediaQuery.of(context).size.height,
-                controller: miniPlayerController,
-                builder: (height, percentage) {
-                  return Center(
-                    child: Text('$height, $percentage'),
-                  );
+              Consumer(
+                builder: (context, ref, child) {
+                  final selectedTrack = ref.watch(selectedTrackProvider);
+                  // final miniPlayerController =
+                  //     ref.watch(miniPlayerControllerProvider.notifier).state;
+                  return selectedTrack == null
+                      ? const SizedBox.shrink()
+                      : Miniplayer(
+                          minHeight: playerHeight,
+                          maxHeight: MediaQuery.of(context).size.height,
+                          // controller: miniPlayerController,
+                          builder: (height, percentage) {
+                            return Column(
+                              children: [
+                                const LinearProgressIndicator(
+                                  minHeight: indicatorHeight,
+                                  value: 0.4,
+                                ),
+                                Row(
+                                  children: [
+                                    FutureBuilder(
+                                      future: getMetadata(selectedTrack.path),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          return snapshot.data?.albumArt != null
+                                              ? Image(
+                                                  image: MemoryImage(
+                                                      snapshot.data!.albumArt!),
+                                                  height: imageSize,
+                                                  width: imageSize,
+                                                  fit: BoxFit.cover,
+                                                  gaplessPlayback: true,
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      const Icon(
+                                                    Icons.music_note_rounded,
+                                                    size: imageSize,
+                                                  ),
+                                                )
+                                              : const Icon(
+                                                  Icons.music_note_rounded,
+                                                  size: imageSize,
+                                                );
+                                        } else {
+                                          return const SizedBox(
+                                            height: imageSize,
+                                            width: imageSize,
+                                          );
+                                        }
+                                      },
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 7.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              selectedTrack.trackName
+                                                  .toString(),
+                                              style:
+                                                  const TextStyle(fontSize: 15),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            Text(
+                                              selectedTrack
+                                                  .albumArtistName.value!.name,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(Icons.play_arrow)),
+                                    IconButton(
+                                        onPressed: () {
+                                          ref
+                                              .read(selectedTrackProvider
+                                                  .notifier)
+                                              .state = null;
+                                        },
+                                        icon: const Icon(Icons.close))
+                                  ],
+                                ),
+                              ],
+                            );
+                          },
+                        );
                 },
               ),
             ],

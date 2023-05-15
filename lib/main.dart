@@ -2,6 +2,7 @@ import 'package:flute/functions/functions.dart';
 import 'package:flute/theme/dynamic_theme_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flute/screens/nav_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:isar/isar.dart';
@@ -21,8 +22,10 @@ void main() async {
   if (isFirstRun == true) {
     await getAllSongs(isar);
   }
-  runApp(MyApp(
-    isar: isar,
+  runApp(ProviderScope(
+    child: MyApp(
+      isar: isar,
+    ),
   ));
 }
 
